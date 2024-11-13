@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from the GitHub repository
+                git url: 'https://github.com/LuisJoseSanchez/hello-world-java.git', branch: 'master'
+            }
+        }
+
+        stage('Compile') {
+            steps {
+                script {
+                    // Compile the Java program using javac (on Windows, using bat step)
+                    bat 'javac HelloWorld.java'
+                }
+            }
+        }
+
+        stage('Run') {
+            steps {
+                script {
+                    // Run the Java program using java (on Windows, using bat step)
+                    bat 'java HelloWorld'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline completed.'
+        }
+    }
+}
